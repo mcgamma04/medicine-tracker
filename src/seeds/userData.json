@@ -1,0 +1,15 @@
+[
+  {
+    "name": "Adebayo Michael",
+    "email": "mcgamma04@gmail.com",
+    "password": "12345",
+    "role": "ADMIN",
+    "Medicine": [
+      {
+        "name": "panadal",
+        "description": "Panadol Original Tablets is a mild analgesic and antipyretic, and is recommended for the treatment of most painful and febrile conditions",
+        "verificationCode": "pd4509"
+      }
+    ]
+  }
+]
