@@ -23,4 +23,17 @@ export class UserController {
       next(error);
     }
   };
+
+  public list = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+        const users = await this.userService.findAll();
+        res.status(200).json({ data: users });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
