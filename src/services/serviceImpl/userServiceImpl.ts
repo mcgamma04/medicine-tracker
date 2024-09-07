@@ -25,7 +25,8 @@ export class UserServiceImpl implements userService {
 
    return newUser;
   }
-  findAll(): Promise<User[]> {
-    throw new Error("Method not implemented.");
+  async findAll(): Promise<User[]> {
+    return await db.user.findMany();
+    // throw new Error("Method not implemented.");
   }
 }
