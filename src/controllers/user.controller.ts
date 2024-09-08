@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { UserServiceImpl } from "../services/serviceImpl/userServiceImpl";
 import { userService } from "../services/user.service";
 import { CreateUserDto } from "../dtos/createUser.dto";
+import { promises } from "dns";
+import { UpdateUserDto } from "../dtos/updateUser.dto";
 
 export class UserController {
   private userService: UserServiceImpl;
@@ -75,6 +77,21 @@ export class UserController {
       const { id } = req.params;
       await this.userService.deleteUser(Number(id));
       res.status(204).json({ message: "User deleted successfully" });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public updateUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const data:UpdateUserDto =  req.body;
+        const user = await this.userService.updateUser(data, Number(id));
+        res.status(200).json({ data: user });
     } catch (error) {
       next(error);
     }

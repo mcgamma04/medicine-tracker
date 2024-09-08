@@ -8,5 +8,5 @@ userRoutes.get("/users", userController.list);
 userRoutes.get("/users/:id", userController.findOne);
 userRoutes.get("/users/q/:email", userController.findOneByEMail);
 userRoutes.delete("/users/:id", userController.deleteUser);
-
+userRoutes.patch("/users/:id", userController.updateUser);
 export default userRoutes;
