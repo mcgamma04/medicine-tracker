@@ -30,8 +30,22 @@ export class UserController {
     next: NextFunction
   ): Promise<void> => {
     try {
-        const users = await this.userService.findAll();
-        res.status(200).json({ data: users });
+      const users = await this.userService.findAll();
+      res.status(200).json({ data: users });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public findOne = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const {email} = req.params;
+      const user = await this.userService.findOne(email);
+      res.status(200).json({ data: user });
     } catch (error) {
       next(error);
     }
