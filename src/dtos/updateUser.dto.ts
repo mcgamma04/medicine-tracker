@@ -6,7 +6,9 @@ export class UpdateUserDto {
   @IsString()
   @MinLength(3)
   name?: string;
+
   @IsOptional()
   @IsEmail()
   email?: string;
+  
 }

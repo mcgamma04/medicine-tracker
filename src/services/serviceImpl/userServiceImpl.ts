@@ -2,6 +2,7 @@ import { User } from "@prisma/client";
 import { CreateUserDto } from "../../dtos/createUser.dto";
 import { userService } from "../user.service";
 import { db } from "../../config/db";
+import { UpdateUserDto } from "../../dtos/updateUser.dto";
 
 export class UserServiceImpl implements userService {
   async createUser(data: CreateUserDto): Promise<CreateUserDto> {
@@ -59,14 +60,36 @@ export class UserServiceImpl implements userService {
         id,
       },
     });
-    if(!user){
-        throw new Error("user does not found");
+    if (!user) {
+      throw new Error("user does not found");
     }
     await db.user.delete({
-        where: {
-            id:user.id
-        }
-    })
+      where: {
+        id: user.id,
+      },
+    });
   }
+  async updateUser(
+    data: UpdateUserDto,
+    id: number
+  ): Promise<Partial<User | null>> {
+    const user = await db.user.findUnique({
+      where: {
+        id,
+      },
+    });
 
+    if (!user) {
+      throw new Error("user not found");
+    }
+    const updatedUser = await db.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        ...data,
+      },
+    });
+    return updatedUser;
+  }
 }
