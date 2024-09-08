@@ -43,8 +43,9 @@ export class UserController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const {email} = req.params;
-      const user = await this.userService.findOne(email);
+      const { id } = req.params;
+
+      const user = await this.userService.findOne(Number(id));
       res.status(200).json({ data: user });
     } catch (error) {
       next(error);

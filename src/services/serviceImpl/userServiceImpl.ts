@@ -29,10 +29,10 @@ export class UserServiceImpl implements userService {
     return await db.user.findMany();
     // throw new Error("Method not implemented.");
   }
-  async findOne(email: string): Promise<User | null> {
+  async findOne(id: number): Promise<User | null> {
     const user = await db.user.findUnique({
       where: {
-        email: email,
+        id,
       },
     });
     if (!user) {
