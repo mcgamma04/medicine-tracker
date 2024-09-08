@@ -39,6 +39,34 @@ export class UserServiceImpl implements userService {
       throw new Error("user does not found");
     }
     return user;
-    // throw new Error("Method not implemented.");
   }
+
+  async findByEmail(email: string): Promise<User | null> {
+    const user = await db.user.findUnique({
+      where: {
+        email,
+      },
+    });
+    if (!user) {
+      throw new Error("user does not found");
+    }
+    return user;
+  }
+
+  async deleteUser(id: number): Promise<void> {
+    const user = await db.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    if(!user){
+        throw new Error("user does not found");
+    }
+    await db.user.delete({
+        where: {
+            id:user.id
+        }
+    })
+  }
+
 }

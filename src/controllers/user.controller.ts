@@ -51,4 +51,32 @@ export class UserController {
       next(error);
     }
   };
+  public findOneByEMail = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { email } = req.params;
+
+      const user = await this.userService.findByEmail(email);
+      res.status(200).json({ data: user });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public deleteUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { id } = req.params;
+      await this.userService.deleteUser(Number(id));
+      res.status(204).json({ message: "User deleted successfully" });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
