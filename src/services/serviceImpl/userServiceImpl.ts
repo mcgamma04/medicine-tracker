@@ -16,7 +16,7 @@ export class UserServiceImpl implements userService {
     if (user) {
       throw new Error("User already exists");
     }
-    
+
     const newUser = await db.user.create({
       data: {
         name: data.name,
@@ -24,7 +24,7 @@ export class UserServiceImpl implements userService {
         password: await hashPassword(data.password),
       },
     });
-// const {password, ...userObj} = newUser;
+    // const {password, ...userObj} = newUser;
     // return   {password, ...userObj} = newUser;
     return newUser;
   }
@@ -93,5 +93,18 @@ export class UserServiceImpl implements userService {
       },
     });
     return updatedUser;
+  }
+
+  async profile(id: number): Promise<User | null> {
+    const user = await db.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!user) {
+      throw new Error("no user found");
+    }
+    return user;
   }
 }
