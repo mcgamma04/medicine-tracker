@@ -8,5 +8,6 @@ export interface userService {
   findOne(id: number): Promise<User | null>;
   findByEmail(email: string): Promise<User | null>;
   deleteUser(id: number): Promise<void>;
-  updateUser(data: UpdateUserDto, id:number): Promise<Partial<User | null>>;
+  updateUser(data: UpdateUserDto, id: number): Promise<Partial<User | null>>;
+  profile(id: number): Promise<User | null>;
 }
