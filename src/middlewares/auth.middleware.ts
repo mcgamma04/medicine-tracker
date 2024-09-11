@@ -1,18 +1,16 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-
 export interface CustomRequest extends Request {
-    userAuth?: string; 
-  } 
-
+  userAuth?: string;
+}
 
 export const authenticateUser = (
   req: CustomRequest,
   res: Response,
   next: NextFunction
 ) => {
-  const authHeader = req?.headers['authorization'];
+  const authHeader = req?.headers["authorization"];
   if (!authHeader) {
     throw new Error("Authorization header is missing");
   }
@@ -21,7 +19,7 @@ export const authenticateUser = (
     if (err) {
       return res.status(403).json({ message: "invalid or expired token" });
     } else {
-      req.userAuth = user?.id;
+      req.userAuth = user;
     }
     next();
   });
