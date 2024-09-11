@@ -105,6 +105,8 @@ export class UserController {
   ): Promise<void> => {
     try {
       const id = req.userAuth;
+      console.log(req.userAuth);
+      
       const user = await this.userService.profile(Number(id));
       res.status(201).json({ user });
     } catch (error) {

@@ -96,6 +96,8 @@ export class UserServiceImpl implements userService {
   }
 
   async profile(id: number): Promise<User | null> {
+    // console.log(id);
+    
     const user = await db.user.findUnique({
       where: {
         id,
