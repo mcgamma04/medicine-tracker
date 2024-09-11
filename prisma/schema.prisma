@@ -25,6 +25,11 @@ enum UserStatus {
   REJECTED
 }
 
+enum DocumentType {
+  CAC
+  PHARMACY_CERTIFICATE
+}
+
 model User {
   id        Int        @id @default(autoincrement())
   name      String
@@ -35,6 +40,7 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   Medicine  Medicine[]
+  Document  Document[]
 }
 
 model Medicine {
@@ -43,7 +49,19 @@ model Medicine {
   description      String
   verificationCode String   @unique
   userId           Int
-  user             User     @relation(fields: [userId], references: [id])
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+model Document {
+  id         Int          @id @default(autoincrement())
+  type       DocumentType @default(CAC)
+  images     String[]
+  userId     Int
+  user       User         @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: Cascade)
+  createdAt  DateTime     @default(now()) @db.Timestamptz(3)
+  uploadedAt DateTime?    @updatedAt
+
+  @@map("document")
 }
