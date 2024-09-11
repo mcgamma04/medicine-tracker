@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { UserAuthService } from "../services/serviceImpl/userAuthServiceImpl";
 import { LoginDto } from "../dtos/login.dto";
+import { log } from "console";
 
 export class UserAuthController {
   private userAuthService: UserAuthService;
@@ -15,6 +16,7 @@ export class UserAuthController {
     next: NextFunction
   ): Promise<void> => {
     try {
+        // console.log(req.headers.authorization?.split(" ")[1]);
       const userLogin = req.body as LoginDto;
       const { accessToken, refreshToken } = await this.userAuthService.login(
         userLogin
