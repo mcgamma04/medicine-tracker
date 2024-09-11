@@ -4,7 +4,7 @@ export class LoginDto {
   @IsEmail()
   email: string;
   @IsString()
-  @MinLength(6)
+  @MinLength(5)
   password: string;
 
   constructor(email: string, password: string) {
