@@ -3,6 +3,7 @@ import { CreateUserDto } from "../../dtos/createUser.dto";
 import { userService } from "../user.service";
 import { db } from "../../config/db";
 import { UpdateUserDto } from "../../dtos/updateUser.dto";
+import { hashPassword } from "../../utils/password.utl";
 
 export class UserServiceImpl implements userService {
   async createUser(data: CreateUserDto): Promise<CreateUserDto> {
@@ -15,15 +16,16 @@ export class UserServiceImpl implements userService {
     if (user) {
       throw new Error("User already exists");
     }
-
+    
     const newUser = await db.user.create({
       data: {
         name: data.name,
         email: data.email,
-        password: data.password,
+        password: await hashPassword(data.password),
       },
     });
-
+// const {password, ...userObj} = newUser;
+    // return   {password, ...userObj} = newUser;
     return newUser;
   }
   async findAll(): Promise<User[]> {
