@@ -4,6 +4,7 @@ import { userService } from "../services/user.service";
 import { CreateUserDto } from "../dtos/createUser.dto";
 import { promises } from "dns";
 import { UpdateUserDto } from "../dtos/updateUser.dto";
+import { CustomRequest } from "../middlewares/auth.middleware";
 
 export class UserController {
   private userService: UserServiceImpl;
@@ -88,10 +89,24 @@ export class UserController {
     next: NextFunction
   ): Promise<void> => {
     try {
-        const { id } = req.params;
-        const data:UpdateUserDto =  req.body;
-        const user = await this.userService.updateUser(data, Number(id));
-        res.status(200).json({ data: user });
+      const { id } = req.params;
+      const data: UpdateUserDto = req.body;
+      const user = await this.userService.updateUser(data, Number(id));
+      res.status(200).json({ data: user });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public profile = async (
+    req: CustomRequest,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const id = req.userAuth;
+      const user = await this.userService.profile(Number(id));
+      res.status(201).json({ user });
     } catch (error) {
       next(error);
     }
