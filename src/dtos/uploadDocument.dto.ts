@@ -7,7 +7,7 @@ import {
 } from "class-validator";
 import { RecordIsInDb } from "../utils/decorators/record_in_db.decorator";
 
-export class uploadDocumentDTO {
+export class UploadDocumentDTO {
   @Validate(RecordIsInDb, ["user.id"])
   user_id!: number;
   @IsEnum(DocumentType)
