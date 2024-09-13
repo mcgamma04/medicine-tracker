@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
-
+import { Request } from "express";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -24,17 +24,26 @@ const storage = new CloudinaryStorage({
   },
 });
 
+
+
+
+
+// const storage = multer.memoryStorage(); // or use diskStorage if you prefer
+
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-  fileFilter: (req: any, file: any, cb: any) => {
-    if (!file.mimetype.match(/image\/(jpg|jpeg|png)|application\/pdf|application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document/)) {
-        cb(new Error('Only image, PDF, DOC, and DOCX files are allowed', 400), false);
-      }
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB file size limit
+  fileFilter: (req: Request, file: Express.Multer.File, cb: any) => { // `any` used here to bypass typing issue
+    const allowedMimeTypes = /image\/(jpg|jpeg|png)|application\/pdf|application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document/;
+
+    if (!allowedMimeTypes.test(file.mimetype)) {
+      cb(new Error('Only image, PDF, DOC, and DOCX files are allowed'), false);
     } else {
       cb(null, true);
     }
-  },
+  }
 });
+
+
 
 export const uploadToCloudinary = upload.array("images", 5); // Allow up to 5 images
