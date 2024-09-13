@@ -25,9 +25,9 @@ enum UserStatus {
   REJECTED
 }
 
-enum DocumentType {
-  CAC
-  PHARMACY_CERTIFICATE
+ enum DocumentType {
+CAC
+PHARMACY_CERTIFICATE
 }
 
 model User {
