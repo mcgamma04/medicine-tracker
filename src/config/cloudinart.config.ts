@@ -12,30 +12,29 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-
-
 // Use a dynamic function for setting Cloudinary parameters
 const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: async (req, file) => {
-      return {
-        folder: 'manufacturer-documents', // Define the folder here
-        format: 'png', // Force file format to png (or you can change it based on file type)
-        public_id: `${file.originalname.split('.')[0]}-${Date.now()}`, // Generate unique public ID
-      };
-    },
-  });
+  cloudinary: cloudinary,
+  params: async (req, file) => {
+    return {
+      folder: "manufacturer-documents", // Define the folder here
+      format: "png", // Force file format to png (or you can change it based on file type)
+      public_id: `${file.originalname.split(".")[0]}-${Date.now()}`, // Generate unique public ID
+    };
+  },
+});
 
-  const upload = multer({
-    storage: storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-    fileFilter: (req:any, file:any, cb:any) => {
-      if (!file.mimetype.match(/image\/(jpg|jpeg|png)|application\/pdf/)) {
-        cb(new Error('Only image and PDF files are allowed'), false);
-      } else {
-        cb(null, true);
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req: any, file: any, cb: any) => {
+    if (!file.mimetype.match(/image\/(jpg|jpeg|png)|application\/pdf|application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document/)) {
+        cb(new Error('Only image, PDF, DOC, and DOCX files are allowed', 400), false);
       }
-    },
-  });
-  
-  export const uploadToCloudinary = upload.array('images', 5); // Allow up to 5 images
+    } else {
+      cb(null, true);
+    }
+  },
+});
+
+export const uploadToCloudinary = upload.array("images", 5); // Allow up to 5 images
