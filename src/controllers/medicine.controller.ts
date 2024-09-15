@@ -6,7 +6,7 @@ export class MedicineController {
     private medicineService!: MedicineServiceImpl;
   
   
-    public createUser = async (
+    public createMedicine = async (
         req: Request,
         res: Response,
         next: NextFunction

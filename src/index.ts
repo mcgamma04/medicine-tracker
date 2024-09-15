@@ -23,7 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/v1/users", userRoutes);
-app.use("/api/v1", authRouter);
+app.use("/api/v1/auth", authRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
