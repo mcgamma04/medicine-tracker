@@ -1,3 +1,5 @@
+import { IsNotEmpty, IsString } from "class-validator";
+
 export class MedicineResponseDTO {
   name!: string;
   description!: string;
@@ -5,4 +7,10 @@ export class MedicineResponseDTO {
   manufactureDate!: Date;
   expirationDate!: Date;
   manufactureName!: string;
+}
+
+export class SearchDTO {
+  @IsNotEmpty()
+  @IsString()
+  code!: string;
 }

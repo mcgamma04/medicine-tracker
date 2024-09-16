@@ -2,7 +2,7 @@ import { Medicine } from "@prisma/client";
 import { CreateMedicineDTO } from "../../dtos/createMedicine.dto";
 import { medicineService } from "../medicine.service";
 import { db } from "../../config/db";
-import { MedicineResponseDTO } from "../../dtos/medicineSearch.dto";
+import { MedicineResponseDTO, SearchDTO } from "../../dtos/medicineSearch.dto";
 
 export class MedicineServiceImpl implements medicineService {
   async getAllMedicines(): Promise<Medicine[]> {
@@ -48,10 +48,10 @@ export class MedicineServiceImpl implements medicineService {
     return medicine;
   }
 
-  async getMedicineByCode(code: string): Promise<MedicineResponseDTO | null> {
+  async getMedicineByCode(data: SearchDTO): Promise<MedicineResponseDTO | null> {
     const medicine = await db.medicine.findUnique({
       where: {
-        verificationCode: code,
+        verificationCode: data.code,
       },
     });
     if (!medicine) {
