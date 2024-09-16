@@ -1,5 +1,4 @@
 import express from "express";
-import { UserAuthController } from "../controllers/userAuth.comtroller";
 import { MedicineController } from "../controllers/medicine.controller";
 import { authenticateUser } from "../middlewares/auth.middleware";
 const medicineRouter = express.Router();
@@ -13,5 +12,6 @@ medicineRouter.get(
   authenticateUser,
   medicineController.getMedicineById
 );
+medicineRouter.post("/verification-code", medicineController.getMedicineByCode);
 
 export default medicineRouter;

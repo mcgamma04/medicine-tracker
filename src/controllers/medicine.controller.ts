@@ -42,7 +42,7 @@ export class MedicineController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const id = req.params;
+      const { id } = req.params;
       const result = await this.medicineService.getMedicineById(Number(id));
       res.status(200).json(result);
     } catch (error) {
@@ -56,8 +56,9 @@ export class MedicineController {
     next: NextFunction
   ): Promise<void> => {
     try {
-        const code:SearchDTO = req.body;
-        const result = await this.medicineService.getMedicineByCode(code);
+      const code: SearchDTO = req.body;
+      const result = await this.medicineService.getMedicineByCode(code);
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }

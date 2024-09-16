@@ -39,7 +39,7 @@ export class MedicineServiceImpl implements medicineService {
   async getMedicineById(id: number): Promise<Medicine | null> {
     const medicine = await db.medicine.findUnique({
       where: {
-        id,
+        id
       },
     });
     if (!medicine) {
@@ -48,7 +48,9 @@ export class MedicineServiceImpl implements medicineService {
     return medicine;
   }
 
-  async getMedicineByCode(data: SearchDTO): Promise<MedicineResponseDTO | null> {
+  async getMedicineByCode(
+    data: SearchDTO
+  ): Promise<MedicineResponseDTO | null> {
     const medicine = await db.medicine.findUnique({
       where: {
         verificationCode: data.code,
@@ -56,7 +58,7 @@ export class MedicineServiceImpl implements medicineService {
     });
     if (!medicine) {
       throw new Error(
-        "sorry, the verfication code is wrong and cannot be verified"
+        "sorry, the verification code is wrong and cannot be verified"
       );
     }
     const manufactureName = await db.user.findFirst({
@@ -64,21 +66,19 @@ export class MedicineServiceImpl implements medicineService {
         id: medicine.userId,
       },
     });
-    
-    if(!manufactureName){
-        throw new Error("We cannot find a manufacturer for the medicine")
+
+    if (!manufactureName) {
+      throw new Error("We cannot find a manufacturer for the medicine");
     }
     // return response that match dto
     return {
-        name: medicine.name,
-        description: medicine.description,
-        manufactureName: manufactureName.name,
-        verificationCode: medicine.verificationCode,
-        manufactureDate: medicine.manufactureDate,
-        expirationDate: medicine.expirationDate,
-    }
-
-  
+      name: medicine.name,
+      description: medicine.description,
+      manufactureName: manufactureName.name,
+      verificationCode: medicine.verificationCode,
+      manufactureDate: medicine.manufactureDate,
+      expirationDate: medicine.expirationDate,
+    };
   }
 }
 
