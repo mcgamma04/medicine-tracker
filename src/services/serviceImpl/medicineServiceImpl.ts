@@ -2,8 +2,13 @@ import { Medicine } from "@prisma/client";
 import { CreateMedicineDTO } from "../../dtos/createMedicine.dto";
 import { medicineService } from "../medicine.service";
 import { db } from "../../config/db";
+import { MedicineResponseDTO, SearchDTO } from "../../dtos/medicineSearch.dto";
 
 export class MedicineServiceImpl implements medicineService {
+  async getAllMedicines(): Promise<Medicine[]> {
+    //! TODO implement with pagination
+    return await db.medicine.findMany();
+  }
   async addMedicine(data: CreateMedicineDTO): Promise<Medicine> {
     const user = await db.user.findUnique({
       where: {
@@ -20,6 +25,8 @@ export class MedicineServiceImpl implements medicineService {
         name: data.name,
         description: data.description,
         verificationCode: generateVerificationCode(),
+        manufactureDate: data.manufactureDate,
+        expirationDate: data.expirationDate,
         user: {
           connect: {
             id: data.user_id,
@@ -28,6 +35,50 @@ export class MedicineServiceImpl implements medicineService {
       },
     });
     return medicine;
+  }
+  async getMedicineById(id: number): Promise<Medicine | null> {
+    const medicine = await db.medicine.findUnique({
+      where: {
+        id
+      },
+    });
+    if (!medicine) {
+      throw new Error(`medicine with id ${id} not found`);
+    }
+    return medicine;
+  }
+
+  async getMedicineByCode(
+    data: SearchDTO
+  ): Promise<MedicineResponseDTO | null> {
+    const medicine = await db.medicine.findUnique({
+      where: {
+        verificationCode: data.code,
+      },
+    });
+    if (!medicine) {
+      throw new Error(
+        "sorry, the verification code is wrong and cannot be verified"
+      );
+    }
+    const manufactureName = await db.user.findFirst({
+      where: {
+        id: medicine.userId,
+      },
+    });
+
+    if (!manufactureName) {
+      throw new Error("We cannot find a manufacturer for the medicine");
+    }
+    // return response that match dto
+    return {
+      name: medicine.name,
+      description: medicine.description,
+      manufactureName: manufactureName.name,
+      verificationCode: medicine.verificationCode,
+      manufactureDate: medicine.manufactureDate,
+      expirationDate: medicine.expirationDate,
+    };
   }
 }
 

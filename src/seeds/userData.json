@@ -8,7 +8,9 @@
       {
         "name": "panadal",
         "description": "Panadol Original Tablets is a mild analgesic and antipyretic, and is recommended for the treatment of most painful and febrile conditions",
-        "verificationCode": "pd4509"
+        "verificationCode": "pd4509",
+        "manufactureDate":"2024-09-09T00:00:00.000Z",
+        "expirationDate":"2026-08-09T00:00:00.000Z"
       }
     ]
   }
