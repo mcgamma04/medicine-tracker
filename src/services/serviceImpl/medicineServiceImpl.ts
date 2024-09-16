@@ -4,6 +4,7 @@ import { medicineService } from "../medicine.service";
 import { db } from "../../config/db";
 
 export class MedicineServiceImpl implements medicineService {
+  
   async getAllMedicines(): Promise<Medicine[]> {
     //! TODO implement with pagination
     return await db.medicine.findMany();
@@ -46,6 +47,11 @@ export class MedicineServiceImpl implements medicineService {
     }
     return medicine;
   }
+
+  getMedicineByCode(code: string): Promise<Medicine | null> {
+    const 
+    throw new Error("Method not implemented.");
+}
 }
 
 function generateVerificationCode(): string {
