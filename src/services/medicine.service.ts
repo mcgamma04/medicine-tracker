@@ -4,5 +4,7 @@ import { CreateMedicineDTO } from "../dtos/createMedicine.dto";
 export interface medicineService{
     //add medicine
     addMedicine(data:CreateMedicineDTO):Promise<Medicine>
+    //get all medicines
+    getAllMedicines():Promise<Medicine[]>
 
 }

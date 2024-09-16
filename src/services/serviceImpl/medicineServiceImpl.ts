@@ -4,6 +4,10 @@ import { medicineService } from "../medicine.service";
 import { db } from "../../config/db";
 
 export class MedicineServiceImpl implements medicineService {
+  getAllMedicines(): Promise<Medicine[]> {
+    //! TODO implement with pagination
+    return db.medicine.findMany();
+  }
   async addMedicine(data: CreateMedicineDTO): Promise<Medicine> {
     const user = await db.user.findUnique({
       where: {
@@ -20,8 +24,8 @@ export class MedicineServiceImpl implements medicineService {
         name: data.name,
         description: data.description,
         verificationCode: generateVerificationCode(),
-        manufactureDate:data.manufactureDate,
-        expirationDate:data.expirationDate,
+        manufactureDate: data.manufactureDate,
+        expirationDate: data.expirationDate,
         user: {
           connect: {
             id: data.user_id,
