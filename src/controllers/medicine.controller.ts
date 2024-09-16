@@ -34,4 +34,18 @@ export class MedicineController {
       next(error);
     }
   };
+
+  public getMedicineById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const id = req.params;
+      const result = await this.medicineService.getMedicineById(Number(id));
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }

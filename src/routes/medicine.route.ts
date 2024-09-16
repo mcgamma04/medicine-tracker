@@ -6,7 +6,12 @@ const medicineRouter = express.Router();
 
 const medicineController = new MedicineController();
 
-medicineRouter.post("/",authenticateUser, medicineController.createMedicine);
+medicineRouter.post("/", authenticateUser, medicineController.createMedicine);
 medicineRouter.get("/", medicineController.list);
+medicineRouter.get(
+  "/:id",
+  authenticateUser,
+  medicineController.getMedicineById
+);
 
 export default medicineRouter;
