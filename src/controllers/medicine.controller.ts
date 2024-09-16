@@ -3,8 +3,10 @@ import { MedicineServiceImpl } from "../services/serviceImpl/medicineServiceImpl
 import { CreateMedicineDTO } from "../dtos/createMedicine.dto";
 
 export class MedicineController {
-    private medicineService!: MedicineServiceImpl;
-  
+    private medicineService: MedicineServiceImpl;
+  constructor(){
+    this.medicineService = new MedicineServiceImpl();
+  }
   
     public createMedicine = async (
         req: Request,

@@ -7,3 +7,5 @@ const medicineRouter = express.Router();
 const medicineController = new MedicineController();
 
 medicineRouter.post("/",authenticateUser, medicineController.createMedicine);
+
+export default medicineRouter;
