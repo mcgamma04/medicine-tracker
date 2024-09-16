@@ -2,9 +2,9 @@ import { Medicine } from "@prisma/client";
 import { CreateMedicineDTO } from "../../dtos/createMedicine.dto";
 import { medicineService } from "../medicine.service";
 import { db } from "../../config/db";
+import { MedicineResponseDTO } from "../../dtos/medicineSearch.dto";
 
 export class MedicineServiceImpl implements medicineService {
-  
   async getAllMedicines(): Promise<Medicine[]> {
     //! TODO implement with pagination
     return await db.medicine.findMany();
@@ -48,10 +48,38 @@ export class MedicineServiceImpl implements medicineService {
     return medicine;
   }
 
-  getMedicineByCode(code: string): Promise<Medicine | null> {
-    const 
-    throw new Error("Method not implemented.");
-}
+  async getMedicineByCode(code: string): Promise<MedicineResponseDTO | null> {
+    const medicine = await db.medicine.findUnique({
+      where: {
+        verificationCode: code,
+      },
+    });
+    if (!medicine) {
+      throw new Error(
+        "sorry, the verfication code is wrong and cannot be verified"
+      );
+    }
+    const manufactureName = await db.user.findFirst({
+      where: {
+        id: medicine.userId,
+      },
+    });
+    
+    if(!manufactureName){
+        throw new Error("We cannot find a manufacturer for the medicine")
+    }
+    // return response that match dto
+    return {
+        name: medicine.name,
+        description: medicine.description,
+        manufactureName: manufactureName.name,
+        verificationCode: medicine.verificationCode,
+        manufactureDate: medicine.manufactureDate,
+        expirationDate: medicine.expirationDate,
+    }
+
+  
+  }
 }
 
 function generateVerificationCode(): string {

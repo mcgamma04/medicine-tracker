@@ -2,7 +2,7 @@ export class MedicineResponseDTO {
   name!: string;
   description!: string;
   verificationCode!: string;
-  manufactureDate!: string;
-  expirationDate!: string;
+  manufactureDate!: Date;
+  expirationDate!: Date;
   manufactureName!: string;
 }
