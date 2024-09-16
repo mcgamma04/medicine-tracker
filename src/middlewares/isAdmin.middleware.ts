@@ -27,3 +27,5 @@ const isAdmin = async (
     next(error);
   }
 };
+
+export default isAdmin;
