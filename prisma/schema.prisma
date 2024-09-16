@@ -36,8 +36,8 @@ model Medicine {
   verificationCode String   @unique
   userId           Int
   user             User     @relation(fields: [userId], references: [id])
-  manufactureDate  DateTime
-  expirationDate   DateTime
+  manufactureDate  DateTime @db.Date
+  expirationDate   DateTime @db.Date
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }

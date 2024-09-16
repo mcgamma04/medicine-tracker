@@ -20,7 +20,10 @@ async function main() {
                     create:userData.Medicine.map((medicineData:any) => ({
                         name:medicineData.name,
                         description:medicineData.description,
-                        verificationCode:medicineData.verificationCode
+                        verificationCode:medicineData.verificationCode,
+                        manufactureDate:medicineData.manufactureDate,
+                        expirationDate:medicineData.expirationDate,
+
                     }))
                 }
             }

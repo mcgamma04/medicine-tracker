@@ -20,6 +20,8 @@ export class MedicineServiceImpl implements medicineService {
         name: data.name,
         description: data.description,
         verificationCode: generateVerificationCode(),
+        manufactureDate:data.manufactureDate,
+        expirationDate:data.expirationDate,
         user: {
           connect: {
             id: data.user_id,
