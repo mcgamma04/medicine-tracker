@@ -4,6 +4,7 @@ import cors from "cors";
 import userRoutes from "./routes/user.route";
 import authRouter from "./routes/auth.route";
 import medicineRouter from "./routes/medicine.route";
+import { errorHandler } from "./utils/errorHandler.util";
 
 dotenv.config();
 
@@ -26,6 +27,8 @@ app.use(express.json());
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/medicine", medicineRouter);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
