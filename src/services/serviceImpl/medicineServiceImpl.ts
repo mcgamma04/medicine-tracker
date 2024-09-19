@@ -3,6 +3,7 @@ import { CreateMedicineDTO } from "../../dtos/createMedicine.dto";
 import { medicineService } from "../medicine.service";
 import { db } from "../../config/db";
 import { MedicineResponseDTO, SearchDTO } from "../../dtos/medicineSearch.dto";
+import { CustomError } from "../../exceptions/customError.error";
 
 export class MedicineServiceImpl implements medicineService {
   async getAllMedicines(): Promise<Medicine[]> {
@@ -17,7 +18,7 @@ export class MedicineServiceImpl implements medicineService {
     });
 
     if (!user) {
-      throw new Error("User with " + data.user_id + " not found");
+      throw new CustomError(409, "User with " + data.user_id + " not found");
     }
 
     const medicine = await db.medicine.create({
@@ -43,7 +44,7 @@ export class MedicineServiceImpl implements medicineService {
       },
     });
     if (!medicine) {
-      throw new Error(`medicine with id ${id} not found`);
+      throw new CustomError(409, "medicine with id " + medicine?.id + " not found");
     }
     return medicine;
   }
@@ -57,9 +58,7 @@ export class MedicineServiceImpl implements medicineService {
       },
     });
     if (!medicine) {
-      throw new Error(
-        "sorry, the verification code is wrong and cannot be verified"
-      );
+      throw new CustomError(409,  "sorry, the verification code is wrong and cannot be verified");
     }
     const manufactureName = await db.user.findFirst({
       where: {
