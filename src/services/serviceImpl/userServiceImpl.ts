@@ -40,7 +40,7 @@ export class UserServiceImpl implements userService {
       },
     });
     if (!user) {
-      throw new CustomError(409, `user does not found`);
+      throw new CustomError(404, `user does not found`);
       
     }
     return user;
@@ -53,7 +53,7 @@ export class UserServiceImpl implements userService {
       },
     });
     if (!user) {
-      throw new CustomError(409, `user does not found`);
+      throw new CustomError(404, `user does not found`);
      
     }
     return user;
@@ -66,7 +66,7 @@ export class UserServiceImpl implements userService {
       },
     });
     if (!user) {
-      throw new CustomError(409, `user does not found`);
+      throw new CustomError(404, `user does not found`);
      
     }
     await db.user.delete({
@@ -86,7 +86,7 @@ export class UserServiceImpl implements userService {
     });
 
     if (!user) {
-      throw new CustomError(409, `user does not found`);
+      throw new CustomError(404, `user does not found`);
     }
     const updatedUser = await db.user.update({
       where: {
@@ -109,7 +109,7 @@ export class UserServiceImpl implements userService {
     });
 
     if (!user) {
-      throw new CustomError(409, `user does not found`);
+      throw new CustomError(404, `user does not found`);
     }
     return user;
   }

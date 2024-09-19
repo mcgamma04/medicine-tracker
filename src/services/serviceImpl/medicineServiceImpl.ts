@@ -18,7 +18,7 @@ export class MedicineServiceImpl implements medicineService {
     });
 
     if (!user) {
-      throw new CustomError(409, "User with " + data.user_id + " not found");
+      throw new CustomError(404, "User with " + data.user_id + " not found");
     }
 
     const medicine = await db.medicine.create({
@@ -40,11 +40,14 @@ export class MedicineServiceImpl implements medicineService {
   async getMedicineById(id: number): Promise<Medicine | null> {
     const medicine = await db.medicine.findUnique({
       where: {
-        id
+        id,
       },
     });
     if (!medicine) {
-      throw new CustomError(409, "medicine with id " + medicine?.id + " not found");
+      throw new CustomError(
+        404,
+        "medicine with id " + id + " not found"
+      );
     }
     return medicine;
   }
@@ -58,7 +61,10 @@ export class MedicineServiceImpl implements medicineService {
       },
     });
     if (!medicine) {
-      throw new CustomError(409,  "sorry, the verification code is wrong and cannot be verified");
+      throw new CustomError(
+        404,
+        "sorry, the verification code is wrong and cannot be verified"
+      );
     }
     const manufactureName = await db.user.findFirst({
       where: {
@@ -67,7 +73,7 @@ export class MedicineServiceImpl implements medicineService {
     });
 
     if (!manufactureName) {
-      throw new Error("We cannot find a manufacturer for the medicine");
+      throw new CustomError(404, "We cannot find a manufacturer for the medicine");
     }
     // return response that match dto
     return {
