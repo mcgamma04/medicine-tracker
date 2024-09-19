@@ -4,6 +4,7 @@ import { userService } from "../user.service";
 import { db } from "../../config/db";
 import { UpdateUserDto } from "../../dtos/updateUser.dto";
 import { hashPassword } from "../../utils/password.utl";
+import { CustomError } from "../../exceptions/customError.error";
 
 export class UserServiceImpl implements userService {
   async createUser(data: CreateUserDto): Promise<CreateUserDto> {
@@ -14,7 +15,7 @@ export class UserServiceImpl implements userService {
     });
 
     if (user) {
-      throw new Error("User already exists");
+      throw new CustomError(409, `user with ${user.email} already exists`);
     }
 
     const newUser = await db.user.create({
@@ -39,7 +40,8 @@ export class UserServiceImpl implements userService {
       },
     });
     if (!user) {
-      throw new Error("user does not found");
+      throw new CustomError(409, `user does not found`);
+      
     }
     return user;
   }
@@ -51,7 +53,8 @@ export class UserServiceImpl implements userService {
       },
     });
     if (!user) {
-      throw new Error("user does not found");
+      throw new CustomError(409, `user does not found`);
+     
     }
     return user;
   }
@@ -63,7 +66,8 @@ export class UserServiceImpl implements userService {
       },
     });
     if (!user) {
-      throw new Error("user does not found");
+      throw new CustomError(409, `user does not found`);
+     
     }
     await db.user.delete({
       where: {
@@ -82,7 +86,7 @@ export class UserServiceImpl implements userService {
     });
 
     if (!user) {
-      throw new Error("user not found");
+      throw new CustomError(409, `user does not found`);
     }
     const updatedUser = await db.user.update({
       where: {
@@ -97,7 +101,7 @@ export class UserServiceImpl implements userService {
 
   async profile(id: number): Promise<User | null> {
     // console.log(id);
-    
+
     const user = await db.user.findUnique({
       where: {
         id,
@@ -105,7 +109,7 @@ export class UserServiceImpl implements userService {
     });
 
     if (!user) {
-      throw new Error("no user found");
+      throw new CustomError(409, `user does not found`);
     }
     return user;
   }
