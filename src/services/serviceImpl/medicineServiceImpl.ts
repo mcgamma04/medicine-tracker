@@ -16,7 +16,6 @@ export class MedicineServiceImpl implements medicineService {
         id: data.user_id,
       },
     });
-
     if (!user) {
       throw new CustomError(404, "User with " + data.user_id + " not found");
     }
