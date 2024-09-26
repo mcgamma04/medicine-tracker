@@ -49,10 +49,7 @@ model Medicine {
   description      String
   verificationCode String   @unique
   userId           Int
-
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  user             User     @relation(fields: [userId], references: [id])
   manufactureDate  DateTime @db.Date
   expirationDate   DateTime @db.Date
 
