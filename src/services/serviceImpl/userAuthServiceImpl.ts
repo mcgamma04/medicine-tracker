@@ -1,5 +1,6 @@
 import { db } from "../../config/db";
 import { LoginDto } from "../../dtos/login.dto";
+import { CustomError } from "../../exceptions/customError.error";
 import { comparePassword } from "../../utils/password.utl";
 import { AuthService } from "../auth.service";
 import jwt from "jsonwebtoken";
@@ -16,7 +17,7 @@ export class UserAuthService implements AuthService {
     });
 
     if (!user) {
-      throw new Error("Invalid email or password");
+      throw new CustomError(401, "Invalid email or password");
     }
 
     //check if password is valid
@@ -25,7 +26,7 @@ export class UserAuthService implements AuthService {
       user.password
     );
     if (!isPasswordValid) {
-      throw new Error("Invalid email or password");
+      throw new CustomError(401, "Invalid email or password");
     }
 
     //generate token
@@ -62,7 +63,8 @@ export class UserAuthService implements AuthService {
       const newAccessToken = this.generateAccessToken(decoded.id, decoded.role);
       return { accessToken: newAccessToken };
     } catch (error) {
-      throw new Error("Invalid or expired refresh token");
+   
+      throw new CustomError(401, "Invalid or expired refresh token");
     }
   }
 }
