@@ -21,7 +21,14 @@ if (isNaN(PORT)) {
 }
 
 const app = express();
-app.use(cors());
+const corsOptions = {
+  origin: "*", // Allow requests from all origins (adjust for production)
+  credentials: true, // Allow cookies for CORS requests
+  allowedHeaders: "*", // Allow all headers (adjust as needed)
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow all HTTP methods
+};
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 app.use("/api/v1/users", userRoutes);

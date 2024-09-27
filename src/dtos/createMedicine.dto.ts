@@ -10,23 +10,23 @@ import { RecordIsInDb } from "../utils/decorators/record_in_db.decorator";
 export class CreateMedicineDTO {
   @IsNotEmpty()
   @IsString()
-  name: string;
+  
+  name!: string;
   @IsNotEmpty()
   @IsString()
-  description: string;
-  @IsNotEmpty()
-  @IsString()
-  verificationCode: string;
+  description!: string;
+ 
+  verificationCode?: string;
   @IsNotEmpty()
   @IsNumber()
   @RecordIsInDb("user.id")
-  user_id: number;
+  user_id!: number;
   @IsNotEmpty()
   @IsDateString()
-  manufactureDate: string;
+  manufactureDate!: string;
   @IsNotEmpty()
   @IsDateString()
-  expirationDate: string;
+  expirationDate!: string;
 
   constructor(
     name: string,
