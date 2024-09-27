@@ -9,7 +9,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts",
-    "migrate":"npx prisma migrate dev --name init",
+    "migrate":"npx prisma migrate deploy --schema=./prisma/schema.prisma",
     "build": "tsc"
   },
   "keywords": [],
