@@ -13,15 +13,16 @@ export class CreateUserDto {
   password: string;
   @IsEnum(UserRole)
   role: UserRole;
-  @IsOptional()
-  @IsEnum(UserStatus)
-  status:UserStatus;
 
-  constructor(email: string, name: string, password: string, role: UserRole,status:UserStatus) {
+  // @IsOptional()
+  // @IsEnum(UserStatus)
+  // status:UserStatus;
+
+  constructor(email: string, name: string, password: string, role: UserRole) {
     this.email = email;
     this.name = name;
     this.password = password;
     this.role = role;
-    this.status = status;
+    // this.status = status;
   }
 }
