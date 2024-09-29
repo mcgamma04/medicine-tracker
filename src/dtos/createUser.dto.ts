@@ -1,5 +1,5 @@
-import { UserRole } from "@prisma/client";
-import { IsEmail, IsEnum, IsString, MinLength } from "class-validator";
+import { UserRole, UserStatus } from "@prisma/client";
+import { IsEmail, IsEnum, IsOptional, IsString, MinLength } from "class-validator";
 
 export class CreateUserDto {
   @IsString()
@@ -13,11 +13,15 @@ export class CreateUserDto {
   password: string;
   @IsEnum(UserRole)
   role: UserRole;
+  @IsOptional()
+  @IsEnum(UserStatus)
+  status:UserStatus;
 
-  constructor(email: string, name: string, password: string, role: UserRole) {
+  constructor(email: string, name: string, password: string, role: UserRole,status:UserStatus) {
     this.email = email;
     this.name = name;
     this.password = password;
     this.role = role;
+    this.status = status;
   }
 }
