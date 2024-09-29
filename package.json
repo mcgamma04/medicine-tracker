@@ -3,13 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "prisma": {
-    "seed": "ts-node --require esbuild-register src/seeds/seed.ts"
-  },
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts",
-    "migrate":"npx prisma migrate deploy",
+    "migrate": "npx prisma migrate deploy",
+    "seed": "ts-node --require esbuild-register src/seeds/seed.ts", 
     "build": "tsc"
   },
   "keywords": [],
