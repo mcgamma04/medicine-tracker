@@ -14,9 +14,7 @@ export class CreateUserDto {
   @IsEnum(UserRole)
   role: UserRole;
 
-  @IsOptional()
-  @IsEnum(UserStatus)
-  status!:UserStatus;
+ 
 
   constructor(email: string, name: string, password: string, role: UserRole) {
     this.email = email;
