@@ -36,11 +36,12 @@ model User {
   email     String     @unique
   password  String
   role      UserRole   @default(MANUFACTURER)
-  // status    UserStatus @default(PENDING)
+  status    UserStatus? @default(PENDING)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   Medicine  Medicine[]
   Document  Document[]
+
 }
 
 model Medicine {
