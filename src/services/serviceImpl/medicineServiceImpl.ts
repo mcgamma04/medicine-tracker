@@ -4,6 +4,7 @@ import { medicineService } from "../medicine.service";
 import { db } from "../../config/db";
 import { MedicineResponseDTO, SearchDTO } from "../../dtos/medicineSearch.dto";
 import { CustomError } from "../../exceptions/customError.error";
+import { sendEmail } from "../../utils/EmailUtils";
 
 export class MedicineServiceImpl implements medicineService {
   async getAllMedicines(): Promise<Medicine[]> {
@@ -34,6 +35,16 @@ export class MedicineServiceImpl implements medicineService {
         },
       },
     });
+
+    await sendEmail(
+      user.email,
+      "Notification from Medical Verification",
+      {
+        name: medicine.name,
+        verificationCode: medicine.verificationCode
+      },
+      "../template/parcelnotification.handlebars"
+    );
     return medicine;
   }
   async getMedicineById(id: number): Promise<Medicine | null> {
