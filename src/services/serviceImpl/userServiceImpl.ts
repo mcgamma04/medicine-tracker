@@ -5,6 +5,7 @@ import { db } from "../../config/db";
 import { UpdateUserDto } from "../../dtos/updateUser.dto";
 import { hashPassword } from "../../utils/password.utl";
 import { CustomError } from "../../exceptions/customError.error";
+import { sendEmail } from "../../utils/EmailUtils";
 
 export class UserServiceImpl implements userService {
   async createUser(data: CreateUserDto): Promise<CreateUserDto> {
@@ -25,8 +26,14 @@ export class UserServiceImpl implements userService {
         password: await hashPassword(data.password),
       },
     });
+    await sendEmail(
+      newUser.email,
+      "Welcome to Medicine Verification",
+      { name: newUser.name  },
+      "../template/welcome.handlebars"
+    );
     // const {password, ...userObj} = newUser;
-    // return   {password, ...userObj} = newUser;
+    // return   {password, ...userObj} = newUser;s
     return newUser;
   }
   async findAll(): Promise<User[]> {
@@ -41,7 +48,6 @@ export class UserServiceImpl implements userService {
     });
     if (!user) {
       throw new CustomError(404, `user does not found`);
-      
     }
     return user;
   }
@@ -54,7 +60,6 @@ export class UserServiceImpl implements userService {
     });
     if (!user) {
       throw new CustomError(404, `user does not found`);
-     
     }
     return user;
   }
@@ -67,7 +72,6 @@ export class UserServiceImpl implements userService {
     });
     if (!user) {
       throw new CustomError(404, `user does not found`);
-     
     }
     await db.user.delete({
       where: {

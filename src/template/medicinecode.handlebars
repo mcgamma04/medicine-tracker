@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Creation Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #007bff;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Medicine Created Successfully</h2>
+        <p>Hello {{ name }},</p>
+        <p>We are pleased to inform you that your medicine has been successfully created in the system.</p>
+        <p><strong>Medicine Name:</strong> {{ medicineName }}</p>
+        <p><strong>Verification Code:</strong> {{ verificationCode }}</p>
+        <p>You can use this verification code to verify the authenticity of the medicine.</p>
+        <p>Thank you for contributing to medicine safety and helping eliminate fake drugs from the market.</p>
+        <div class="footer">
+            <p>If you have any questions, feel free to contact us at support@medicine-verification.com</p>
+        </div>
+    </div>
+</body>
+
+</html>
