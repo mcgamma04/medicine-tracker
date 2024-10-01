@@ -4,6 +4,7 @@ import handlebars from "handlebars";
 import path from "path";
 import fs from "fs";
 
+
 // Create a nodemailer transporter
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -25,7 +26,7 @@ export const sendEmail = async (
 
   try {
     const mailOptions: SendMailOptions = {
-      from: "Medicine Verification <engineermikeadebayo@gmail.com>",
+      from: "Medical Verification <engineermikeadebayo@gmail.com>",
       to,
       subject,
       html: compiledTemplate(html),
