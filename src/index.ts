@@ -5,6 +5,9 @@ import userRoutes from "./routes/user.route";
 import authRouter from "./routes/auth.route";
 import medicineRouter from "./routes/medicine.route";
 import { errorHandler } from "./utils/errorHandler.util";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import { swaggerOptions } from "./swagger";
 
 dotenv.config();
 
@@ -22,14 +25,20 @@ if (isNaN(PORT)) {
 
 const app = express();
 const corsOptions = {
-  origin: "*", // Allow requests from all origins (adjust for production)
-  credentials: true, // Allow cookies for CORS requests
-  allowedHeaders: "*", // Allow all headers (adjust as needed)
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow all HTTP methods
+  origin: "*", /*! TODO Allow requests from all origins (adjust for production) */
+  credentials: true, 
+  allowedHeaders: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", 
 };
 app.use(cors(corsOptions));
 
 app.use(express.json());
+// Initialize swagger-jsdoc
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
+// Serve swagger docs
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/auth", authRouter);
@@ -39,4 +48,5 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  console.log("Swagger docs available at http://localhost:3010/api-docs");
 });
