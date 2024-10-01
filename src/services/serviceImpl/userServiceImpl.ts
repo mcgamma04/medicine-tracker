@@ -28,7 +28,7 @@ export class UserServiceImpl implements userService {
     });
     await sendEmail(
       newUser.email,
-      "Welcome to Sosils",
+      "Welcome to Medicine Verification",
       { name: newUser.name  },
       "../template/welcome.handlebars"
     );
