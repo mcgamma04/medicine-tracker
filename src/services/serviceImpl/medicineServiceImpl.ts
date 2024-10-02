@@ -100,17 +100,18 @@ export class MedicineServiceImpl implements medicineService {
   }
 
   async medicineByManufacturer(user_id: number): Promise<Medicine[] | null> {
-    const medicine = await db.medicine.findMany({
+    const medicines = await db.medicine.findMany({
       where: {
         userId: user_id,
       },
     });
 
-    if (!medicine) {
-      throw new CustomError(404, "There is no user with such an id");
+    // Check if no medicines are found
+    if (medicines.length === 0) {
+      throw new CustomError(404, "No medicines found for this manufacturer");
     }
-    //return medicine
-    return medicine;
+
+    return medicines;
   }
 }
 

@@ -26,7 +26,7 @@ medicineRouter.post(
   validationMiddleware(SearchDTO),
   medicineController.getMedicineByCode
 );
-medicineRouter.post(
+medicineRouter.get(
   "/drugs",
   authenticateUser,
   medicineController.getMedicineByCreatedByUser

@@ -3,6 +3,7 @@ import { MedicineServiceImpl } from "../services/serviceImpl/medicineServiceImpl
 import { CreateMedicineDTO } from "../dtos/createMedicine.dto";
 import { SearchDTO } from "../dtos/medicineSearch.dto";
 import { CustomRequest } from "../middlewares/auth.middleware";
+import { CustomError } from "../exceptions/customError.error";
 
 export class MedicineController {
   private medicineService: MedicineServiceImpl;
@@ -72,8 +73,10 @@ export class MedicineController {
   ): Promise<void> => {
     try {
       const user_id = req.userAuth;
-      const result = await this.medicineService.getMedicineById(Number(user_id));
-      res.status(200).json(result);
+      const resultOut = await this.medicineService.medicineByManufacturer(
+        Number(user_id)
+      );
+      res.status(200).json(resultOut);
     } catch (error) {
       next(error);
     }
