@@ -22,6 +22,7 @@ export class MedicineServiceImpl implements medicineService {
       throw new CustomError(404, "User with " + data.user_id + " not found");
     }
 
+    let name_company = user.name;
     const medicine = await db.medicine.create({
       data: {
         name: data.name,
@@ -41,13 +42,15 @@ export class MedicineServiceImpl implements medicineService {
       user.email,
       "Notification from Medical Verification",
       {
+        name_company:user.name,
         name: medicine.name,
         verificationCode: medicine.verificationCode
       },
-      "../template/parcelnotification.handlebars"
+      "../template/medicineverification.handlebars"
     );
     return medicine;
   }
+  
   async getMedicineById(id: number): Promise<Medicine | null> {
     const medicine = await db.medicine.findUnique({
       where: {
