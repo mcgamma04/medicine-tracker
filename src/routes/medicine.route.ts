@@ -9,13 +9,26 @@ const medicineRouter = express.Router();
 
 const medicineController = new MedicineController();
 
-medicineRouter.post("/", validationMiddleware(CreateMedicineDTO), authenticateUser, medicineController.createMedicine);
-medicineRouter.get("/", isAdmin,medicineController.list);
+medicineRouter.post(
+  "/",
+  validationMiddleware(CreateMedicineDTO),
+  authenticateUser,
+  medicineController.createMedicine
+);
+medicineRouter.get("/", isAdmin, medicineController.list);
 medicineRouter.get(
   "/:id",
   authenticateUser,
   medicineController.getMedicineById
 );
-medicineRouter.post("/verification-code", validationMiddleware(SearchDTO),medicineController.getMedicineByCode);
-
+medicineRouter.post(
+  "/verification-code",
+  validationMiddleware(SearchDTO),
+  medicineController.getMedicineByCode
+);
+medicineRouter.post(
+  "/drugs",
+  authenticateUser,
+  medicineController.getMedicineByCreatedByUser
+);
 export default medicineRouter;
