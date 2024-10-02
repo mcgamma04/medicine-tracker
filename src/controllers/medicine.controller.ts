@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { MedicineServiceImpl } from "../services/serviceImpl/medicineServiceImpl";
 import { CreateMedicineDTO } from "../dtos/createMedicine.dto";
 import { SearchDTO } from "../dtos/medicineSearch.dto";
+import { CustomRequest } from "../middlewares/auth.middleware";
 
 export class MedicineController {
   private medicineService: MedicineServiceImpl;
@@ -58,6 +59,20 @@ export class MedicineController {
     try {
       const code: SearchDTO = req.body;
       const result = await this.medicineService.getMedicineByCode(code);
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getMedicineByCreatedByUser = async (
+    req: CustomRequest,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const user_id = req.userAuth;
+      const result = await this.medicineService.getMedicineById(Number(user_id));
       res.status(200).json(result);
     } catch (error) {
       next(error);
