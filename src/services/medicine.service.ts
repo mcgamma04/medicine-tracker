@@ -12,5 +12,5 @@ export interface medicineService {
   //get by verification code
   getMedicineByCode(data: SearchDTO): Promise<MedicineResponseDTO | null>;
   //get all medicine created by certain manufacturer
-  medicineByManufacturer(manu_id:number):Promise<Medicine | null>
+  medicineByManufacturer(user_id:number):Promise<Medicine[] | null>;
 }

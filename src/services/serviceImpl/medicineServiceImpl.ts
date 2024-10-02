@@ -6,7 +6,6 @@ import { MedicineResponseDTO, SearchDTO } from "../../dtos/medicineSearch.dto";
 import { CustomError } from "../../exceptions/customError.error";
 import { sendEmail } from "../../utils/emailsUtils";
 
-
 export class MedicineServiceImpl implements medicineService {
   async getAllMedicines(): Promise<Medicine[]> {
     //! TODO implement with pagination
@@ -42,15 +41,15 @@ export class MedicineServiceImpl implements medicineService {
       user.email,
       "Notification from Medical Verification",
       {
-        name_company:user.name,
+        name_company: user.name,
         name: medicine.name,
-        verificationCode: medicine.verificationCode
+        verificationCode: medicine.verificationCode,
       },
       "../template/medicineverification.handlebars"
     );
     return medicine;
   }
-  
+
   async getMedicineById(id: number): Promise<Medicine | null> {
     const medicine = await db.medicine.findUnique({
       where: {
@@ -58,10 +57,7 @@ export class MedicineServiceImpl implements medicineService {
       },
     });
     if (!medicine) {
-      throw new CustomError(
-        404,
-        "medicine with id " + id + " not found"
-      );
+      throw new CustomError(404, "medicine with id " + id + " not found");
     }
     return medicine;
   }
@@ -87,7 +83,10 @@ export class MedicineServiceImpl implements medicineService {
     });
 
     if (!manufactureName) {
-      throw new CustomError(404, "We cannot find a manufacturer for the medicine");
+      throw new CustomError(
+        404,
+        "We cannot find a manufacturer for the medicine"
+      );
     }
     // return response that match dto
     return {
@@ -98,6 +97,20 @@ export class MedicineServiceImpl implements medicineService {
       manufactureDate: medicine.manufactureDate,
       expirationDate: medicine.expirationDate,
     };
+  }
+
+  async medicineByManufacturer(user_id: number): Promise<Medicine[] | null> {
+    const medicine = await db.medicine.findMany({
+      where: {
+        userId: user_id,
+      },
+    });
+
+    if (!medicine) {
+      throw new CustomError(404, "There is no user with such an id");
+    }
+    //return medicine
+    return medicine;
   }
 }
 
