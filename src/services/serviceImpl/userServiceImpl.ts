@@ -5,7 +5,8 @@ import { db } from "../../config/db";
 import { UpdateUserDto } from "../../dtos/updateUser.dto";
 import { hashPassword } from "../../utils/password.utl";
 import { CustomError } from "../../exceptions/customError.error";
-import { sendEmail } from "../../utils/EmailUtils";
+import { sendEmail } from "../../utils/emailsUtils";
+
 
 export class UserServiceImpl implements userService {
   async createUser(data: CreateUserDto): Promise<CreateUserDto> {

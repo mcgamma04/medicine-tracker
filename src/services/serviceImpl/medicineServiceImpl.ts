@@ -4,7 +4,8 @@ import { medicineService } from "../medicine.service";
 import { db } from "../../config/db";
 import { MedicineResponseDTO, SearchDTO } from "../../dtos/medicineSearch.dto";
 import { CustomError } from "../../exceptions/customError.error";
-import { sendEmail } from "../../utils/EmailUtils";
+import { sendEmail } from "../../utils/emailsUtils";
+
 
 export class MedicineServiceImpl implements medicineService {
   async getAllMedicines(): Promise<Medicine[]> {
