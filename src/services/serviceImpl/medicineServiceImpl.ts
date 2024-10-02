@@ -46,10 +46,11 @@ export class MedicineServiceImpl implements medicineService {
         name: medicine.name,
         verificationCode: medicine.verificationCode
       },
-      "../template/parcelnotification.handlebars"
+      "../template/medicineverification.handlebars"
     );
     return medicine;
   }
+  
   async getMedicineById(id: number): Promise<Medicine | null> {
     const medicine = await db.medicine.findUnique({
       where: {
