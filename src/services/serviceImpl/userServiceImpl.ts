@@ -39,7 +39,7 @@ export class UserServiceImpl implements userService {
   }
   async findAll(): Promise<User[]> {
     return await db.user.findMany();
-    // throw new Error("Method not implemented.");
+    
   }
   async findOne(id: number): Promise<User | null> {
     const user = await db.user.findUnique({

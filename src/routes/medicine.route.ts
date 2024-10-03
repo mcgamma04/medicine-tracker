@@ -15,7 +15,8 @@ medicineRouter.post(
   authenticateUser,
   medicineController.createMedicine
 );
-medicineRouter.get("/", isAdmin, medicineController.list);
+medicineRouter.get("/", authenticateUser, isAdmin, medicineController.list);
+
 medicineRouter.get(
   "/:id",
   authenticateUser,
