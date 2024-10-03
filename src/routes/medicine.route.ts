@@ -27,7 +27,7 @@ medicineRouter.post(
   medicineController.getMedicineByCode
 );
 medicineRouter.get(
-  "/drugs",
+  "/drugs/manufacturer",
   authenticateUser,
   medicineController.getMedicineByCreatedByUser
 );

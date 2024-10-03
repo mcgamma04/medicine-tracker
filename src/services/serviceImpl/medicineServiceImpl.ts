@@ -105,6 +105,7 @@ export class MedicineServiceImpl implements medicineService {
         userId: user_id,
       },
     });
+console.log(medicines);
 
     // Check if no medicines are found
     if (medicines.length === 0) {
