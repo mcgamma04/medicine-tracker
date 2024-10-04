@@ -13,4 +13,6 @@ export interface medicineService {
   getMedicineByCode(data: SearchDTO): Promise<MedicineResponseDTO | null>;
   //get all medicine created by certain manufacturer
   medicineByManufacturer(user_id:number):Promise<Medicine[] | null>;
+  //delete medicine
+  deleteMedicine(id: number, user_id:number): Promise<void>;
 }
