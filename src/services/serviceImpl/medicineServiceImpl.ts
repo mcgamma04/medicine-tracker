@@ -133,9 +133,9 @@ export class MedicineServiceImpl implements medicineService {
         "You are not authorized to delete this medicine."
       );
     }
-    db.medicine.delete({
+    await db.medicine.delete({
       where: {
-        id,
+        id:medicine.id,
       },
     });
 

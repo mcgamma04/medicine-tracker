@@ -81,4 +81,20 @@ export class MedicineController {
       next(error);
     }
   };
-}
+
+  //delete 
+  public deleteMedicine = async (
+    req: CustomRequest,
+    res: Response,
+    next: NextFunction):Promise<void> => {
+      try {
+        const { id } = req.params;
+        const user_id = req.userAuth;
+        await this.medicineService.deleteMedicine(Number(id), Number(user_id));
+        res.status(204).json({ message: "Medicine deleted successfully." });
+      } catch (error) {
+        next(error);
+      }
+    };
+    }
+
