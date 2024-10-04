@@ -105,7 +105,7 @@ export class MedicineServiceImpl implements medicineService {
         userId: user_id,
       },
     });
-console.log(medicines);
+    console.log(medicines);
 
     // Check if no medicines are found
     if (medicines.length === 0) {
@@ -113,6 +113,33 @@ console.log(medicines);
     }
 
     return medicines;
+  }
+
+  async deleteMedicine(id: number, user_id: number): Promise<void> {
+    //delete medicine created by manufacturer
+    const medicine = await db.medicine.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!medicine) {
+      throw new CustomError(404, "Medicine is not found!. ");
+    }
+
+    if (medicine.userId !== user_id) {
+      throw new CustomError(
+        403,
+        "You are not authorized to delete this medicine."
+      );
+    }
+    db.medicine.delete({
+      where: {
+        id,
+      },
+    });
+
+    
   }
 }
 
