@@ -37,4 +37,10 @@ medicineRouter.delete(
   authenticateUser,
   medicineController.deleteMedicine
 );
+
+medicineRouter.patch(
+  "/:id",
+  authenticateUser,
+  medicineController.updateMedicine
+);
 export default medicineRouter;
