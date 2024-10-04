@@ -1,6 +1,7 @@
 import { Medicine } from "@prisma/client";
 import { CreateMedicineDTO } from "../dtos/createMedicine.dto";
 import { MedicineResponseDTO, SearchDTO } from "../dtos/medicineSearch.dto";
+import { UpdateMedicineDTO } from "../dtos/updateMedicine.dto";
 
 export interface medicineService {
   //add medicine
@@ -15,4 +16,5 @@ export interface medicineService {
   medicineByManufacturer(user_id:number):Promise<Medicine[] | null>;
   //delete medicine
   deleteMedicine(id: number, user_id:number): Promise<void>;
+  updateMedicine(id: number, dto: UpdateMedicineDTO, userId: number): Promise<void>;
 }
