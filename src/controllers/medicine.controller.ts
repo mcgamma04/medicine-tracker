@@ -4,6 +4,7 @@ import { CreateMedicineDTO } from "../dtos/createMedicine.dto";
 import { SearchDTO } from "../dtos/medicineSearch.dto";
 import { CustomRequest } from "../middlewares/auth.middleware";
 import { CustomError } from "../exceptions/customError.error";
+import { UpdateMedicineDTO } from "../dtos/updateMedicine.dto";
 
 export class MedicineController {
   private medicineService: MedicineServiceImpl;
@@ -77,6 +78,44 @@ export class MedicineController {
         Number(user_id)
       );
       res.status(200).json(resultOut);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  //delete
+  public deleteMedicine = async (
+    req: CustomRequest,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { id } = req.params;
+      const user_id = req.userAuth;
+      await this.medicineService.deleteMedicine(Number(id), Number(user_id));
+      res.status(204).json({ message: "Medicine deleted successfully." });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public updateMedicine = async (
+    req: CustomRequest,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { id } = req.params;
+      const dto: UpdateMedicineDTO = req.body;
+      const userId = req.userAuth;
+
+      await this.medicineService.updateMedicine(
+        Number(id),
+        dto,
+        Number(userId)
+      );
+
+      res.status(200).json({ message: "Medicine updated successfully" });
     } catch (error) {
       next(error);
     }

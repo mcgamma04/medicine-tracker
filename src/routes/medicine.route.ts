@@ -32,4 +32,15 @@ medicineRouter.get(
   authenticateUser,
   medicineController.getMedicineByCreatedByUser
 );
+medicineRouter.delete(
+  "/drugs/:id",
+  authenticateUser,
+  medicineController.deleteMedicine
+);
+
+medicineRouter.patch(
+  "/:id",
+  authenticateUser,
+  medicineController.updateMedicine
+);
 export default medicineRouter;
