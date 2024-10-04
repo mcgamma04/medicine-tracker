@@ -5,6 +5,7 @@ import { db } from "../../config/db";
 import { MedicineResponseDTO, SearchDTO } from "../../dtos/medicineSearch.dto";
 import { CustomError } from "../../exceptions/customError.error";
 import { sendEmail } from "../../utils/emailsUtils";
+import { UpdateMedicineDTO } from "../../dtos/updateMedicine.dto";
 
 export class MedicineServiceImpl implements medicineService {
   async getAllMedicines(): Promise<Medicine[]> {
@@ -135,10 +136,34 @@ export class MedicineServiceImpl implements medicineService {
     }
     await db.medicine.delete({
       where: {
-        id:medicine.id,
+        id: medicine.id,
       },
     });
+  }
 
+  async updateMedicine(
+    id: number,
+    dto: UpdateMedicineDTO,
+    userId: number
+  ): Promise<void> {
+    const medicine = await db.medicine.findUnique({
+      where: { id },
+    });
+
+    if (!medicine) {
+      throw new CustomError(404, "Medicine not found");
+    }
+
+    if (medicine.userId !== userId) {
+      throw new CustomError(403, "You are not allowed to update this medicine");
+    }
+
+    const updated = await db.medicine.update({
+      where: { id },
+      data: { ...dto },
+    });
+
+   
     
   }
 }
